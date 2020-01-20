@@ -13,4 +13,6 @@ Create an IAM Role with the following permissions to the Lambda Service
 
 ## How it works
 
+![RDS Backup Design Flow](https://raw.githubusercontent.com/rsram312/automated-rds-snapshots/master/rds-backup-design.png)
+
 The CloudWatch event is scheduled to run on a daily basis and Lambda function is added as target to be triggered. The Lambda function is python based and uses Boto library to make calls to AWS Resources. The Lambda function uses the `create_db_snapshot` API call to create RDS snapshots. On completion of the job, the Lambda would then send the SNS notifications based on whether it was a success or failure.
