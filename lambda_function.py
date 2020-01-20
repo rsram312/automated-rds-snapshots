@@ -1,3 +1,5 @@
+""" Lambda function to backup database.
+"""
 import boto3
 import os
 from datetime import date
@@ -6,6 +8,9 @@ from botocore.exceptions import ClientError
 rds = boto3.client('rds')
 sns = boto3.client('sns')
 
+"""
+    Environment variables are being read.
+"""
 db_instance_identifier = os.environ['dbInstanceIdentifier']
 owner_contact = os.environ['ownerContact']
 topic_arn = os.environ['topicArn']
@@ -34,6 +39,15 @@ def lambda_handler(event, context):
 
 
 def sns_publish(message, subject):
+     """Publish SNS message.
+
+    Arguments:
+        message {string} -- Message that needs to be published to subscribers.
+        subject -- Title of the SNS notification.
+
+    Returns:
+        none
+    """
     response = sns.publish(
         TopicArn=topic_arn,
         Message=message,
